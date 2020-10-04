@@ -13,7 +13,7 @@
         }
     }
 
-    var searchbar = document.getElementById("searchbar");
+   /*  var searchbar = document.getElementById("searchbar");
     searchbar.addEventListener('keyup',function(e){
         var foodcardiv=document.getElementsByClassName("food-card");
         
@@ -21,7 +21,7 @@
         {
            console.log(foodcardiv.innerText);
         }
-    })
+    }) */
  
 
     var cartitembtns = document.getElementsByClassName("btn-card");
@@ -30,7 +30,6 @@
     {
         cartitembtns[i].addEventListener('click',function(e){
             var itemdiv = e.target.parentElement;
-            console.log(itemdiv);
             var imgsrc = itemdiv.getElementsByTagName("img")[0].src;
             var dish=itemdiv.getElementsByTagName("h4")[0].innerText;
             var cost=itemdiv.getElementsByTagName("h4")[1].innerText;
@@ -63,21 +62,26 @@ function UpdatecartTotal(){
     var total=0;
     var t= document.getElementById("table");
     var rows =t.getElementsByTagName("tr");
-    var fquantity=1;
+    var fquantity;
     for(var i=1;i<rows.length;i++)
     {
         var cost = rows[i].getElementsByTagName("td")[2];
         var quantity = rows[i].getElementsByTagName("td")[1];
-        var eachcost = rows[i].getElementsByTagName("td")[0];
         var price = parseFloat(cost.innerText.replace('$',''));
-        var eachcostf = eachcost.getElementsByTagName("small")[0];
-        var fq=eachcostf.innerText;
-        var eachcostf2=parseInt(fq.replace("$",""));
+        var eachcost = rows[i].getElementsByTagName("td")[0];
+        
         quantity.addEventListener('change',function(e){
+        
             fquantity = e.target.value;
-            price = fquantity*eachcostf2
-            cost.innerText = price+" $";
-            console.log(cost.innerText);
+            var qchanged=e.target.parentElement.parentElement;
+            var cost2change=qchanged.getElementsByTagName("td")[2];
+            var costofeach=qchanged.getElementsByTagName("td")[0];
+            var eachcostf = costofeach.getElementsByTagName("small")[0];
+            var fq=eachcostf.innerText;
+            var eachcostf2=parseInt(fq.replace("$",""));
+            console.log(cost2change.innerHTML);
+            price = fquantity*eachcostf2;
+            cost2change.innerText = price+" $";
             UpdatecartTotal();
         })
         total = price+total;
